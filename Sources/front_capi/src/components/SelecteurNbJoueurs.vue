@@ -33,7 +33,6 @@ export default {
     name: 'SelecteurNbJoueursVue',
     data() {
         return {
-            coloredRects: [],
             hoveredRectIndex: 10,
             selectedRectIndex: 10,
             nbHoveredRect: 0,
@@ -124,10 +123,10 @@ export default {
 }
 
 .rectangle {
-  height: 20px;
-  background-color: #333030;
-  opacity: 34%;
-  border-radius: 5%;
+    height: 20px;
+    background-color: #333030;
+    opacity: 34%;
+    border-radius: 5%;
 }
 
 .hover-blue {
