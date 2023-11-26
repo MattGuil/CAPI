@@ -1,14 +1,16 @@
 <template>
-  <Cartes/>
+  <Jauge/>
 </template>
 
 <script>
-import Cartes from './components/Cartes.vue'
+// import Cartes from './components/Cartes.vue'
+import Jauge from './components/SelecteurNbJoueurs.vue'
 
 export default {
   name: 'App',
   components: {
-    Cartes,
+    // Cartes,
+    Jauge
   }
 }
 </script>
