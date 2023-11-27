@@ -22,6 +22,14 @@
                         ]"
                         @click="toggleColor(rectIndex)"
                     ></div>
+                    <input
+                        type="text"
+                        v-if="isSelected(rectIndex)"
+                        class="text-field"
+                        placeholder="entrer un pseudo"
+                        :value="pseudos[10 - rectIndex]"
+                        @input="updatePseudos($event, 10 - rectIndex)"
+                    >
                 </div>
             </div>
         </div>
@@ -37,6 +45,7 @@ export default {
             selectedRectIndex: 10,
             nbHoveredRect: 0,
             nbSelectedRect: 0,
+            pseudos: {},
         };
     },
     methods: {
@@ -54,6 +63,17 @@ export default {
         },
         isSelected(rectIndex) {
             return this.selectedRectIndex !== null && rectIndex >= this.selectedRectIndex;
+        },
+        updatePseudos(event, index) {
+            this.pseudos[index] = event.target.value;
+            this.pseudos[index] = event.target.value.toUpperCase();
+        },
+        generateJSON() {
+            const jsonData = {
+                nbJoueurs: this.nbSelectedRect,
+                pseudos: this.pseudos
+            };
+            return JSON.stringify(jsonData);
         }
     },
     updated() {
@@ -67,7 +87,7 @@ export default {
 
 #container {
     display: flex;
-    height: 100vh;
+    height: 90vh;
     justify-content: center;
     align-items: center;
 }
@@ -91,7 +111,7 @@ export default {
 
 #nbJoueurs-values {
     font-family: ObjectSans-Heavy;
-    transform: translate(-150%, 0);
+    transform: translate(-112%, 0);
     position: relative;
     display: flex;
     justify-content: flex-end;
@@ -115,18 +135,22 @@ export default {
 }
 
 .jauge {
-    width: 50px;
+    width: 200px;
 }
 
 .rectangle-container {
-    padding-bottom: 3px;
+    padding: 0 0 3px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .rectangle {
     height: 20px;
+    width: 20%;
     background-color: #333030;
     opacity: 34%;
-    border-radius: 5%;
+    border-radius: 10%;
 }
 
 .hover-blue {
@@ -136,6 +160,12 @@ export default {
 .blue {
     background-color: #518CE5;
     opacity: 1;
+}
+
+.text-field {
+    width: 70%;
+    border: 0;
+    font-family: ObjectSans-HeavySlanted;
 }
   
 </style>
