@@ -1,21 +1,26 @@
 <template>
-  <Jauge ref="SelecteurNbJoueurs"/>
-  <button id="playButton" @click="printPlayers">JOUER</button>
+  <SlcModeJeu ref="SelecteurModeJeu"/>
+  <button id="playButton" @click="printMode">JOUER</button>
 </template>
 
 <script>
 // import Cartes from './components/Cartes.vue'
-import Jauge from './components/SelecteurNbJoueurs.vue'
+// import SlcNbJoueurs from './components/SelecteurNbJoueurs.vue'
+import SlcModeJeu from './components/SelecteurModeJeu.vue'
 
 export default {
   name: 'App',
   components: {
     // Cartes,
-    Jauge
+    // SlcNbJoueurs,
+    SlcModeJeu,
   },
   methods: {
     printPlayers() {
       console.log(JSON.parse(this.$refs.SelecteurNbJoueurs.generateJSON()));
+    },
+    printMode() {
+      console.log(JSON.parse(this.$refs.SelecteurModeJeu.generateJSON()));
     },
   }
 }
