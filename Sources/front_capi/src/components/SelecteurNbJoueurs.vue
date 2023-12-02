@@ -167,5 +167,9 @@ export default {
     border: 0;
     font-family: ObjectSans-HeavySlanted;
 }
+
+::placeholder {
+    opacity: 0.34;
+}
   
 </style>
