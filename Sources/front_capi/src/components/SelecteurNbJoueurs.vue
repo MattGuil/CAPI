@@ -1,36 +1,34 @@
 <template>
     <div id="container">
-        <div>
-            <div id="nbJoueurs-values">
-                <p>{{ nbSelectedRect }}</p>
-                <p v-if="nbHoveredRect !== 0">{{ nbHoveredRect }}</p>
-            </div>
-            <p id="nbJoueurs-label">JOUEURS</p>
-            <div class="jauge">
+        <div id="nbJoueurs-values">
+            <p>{{ nbSelectedRect }}</p>
+            <p v-if="nbHoveredRect !== 0">{{ nbHoveredRect }}</p>
+        </div>
+        <p id="nbJoueurs-label">JOUEURS</p>
+        <div class="jauge">
+            <div
+                class="rectangle-container"
+                v-for="(index, rectIndex) in 10"
+                :key="index"
+                @mouseover="handleMouseOver(rectIndex)"
+                @mouseleave="handleMouseLeave"
+            >
                 <div
-                    class="rectangle-container"
-                    v-for="(index, rectIndex) in 10"
-                    :key="index"
-                    @mouseover="handleMouseOver(rectIndex)"
-                    @mouseleave="handleMouseLeave"
+                    :class="[
+                        'rectangle', 
+                        { 'blue': isSelected(rectIndex) },
+                        { 'hover-blue': isHovered(rectIndex) },
+                    ]"
+                    @click="toggleColor(rectIndex)"
+                ></div>
+                <input
+                    type="text"
+                    v-if="isSelected(rectIndex)"
+                    class="text-field"
+                    placeholder="entrer un pseudo"
+                    :value="pseudos[10 - rectIndex]"
+                    @input="updatePseudos($event, 10 - rectIndex)"
                 >
-                    <div
-                        :class="[
-                            'rectangle', 
-                            { 'blue': isSelected(rectIndex) },
-                            { 'hover-blue': isHovered(rectIndex) },
-                        ]"
-                        @click="toggleColor(rectIndex)"
-                    ></div>
-                    <input
-                        type="text"
-                        v-if="isSelected(rectIndex)"
-                        class="text-field"
-                        placeholder="entrer un pseudo"
-                        :value="pseudos[10 - rectIndex]"
-                        @input="updatePseudos($event, 10 - rectIndex)"
-                    >
-                </div>
             </div>
         </div>
     </div>
@@ -86,14 +84,8 @@ export default {
 <style scoped>
 
 #container {
-    display: flex;
-    height: 90vh;
-    justify-content: center;
-    align-items: center;
-}
-
-#container > div {
     position: relative;
+    margin-left: 15%;
 }
 
 #nbJoueurs-label, nbJoueurs-values {

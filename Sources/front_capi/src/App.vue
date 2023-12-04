@@ -1,40 +1,19 @@
 <template>
-  <SlcModeJeu ref="SelecteurModeJeu"/>
-  <button id="playButton" @click="printMode">JOUER</button>
+  <Menu></Menu>
 </template>
 
 <script>
-// import Cartes from './components/Cartes.vue'
-// import SlcNbJoueurs from './components/SelecteurNbJoueurs.vue'
-import SlcModeJeu from './components/SelecteurModeJeu.vue'
+import Menu from './vues/Menu.vue'
 
 export default {
   name: 'App',
   components: {
-    // Cartes,
-    // SlcNbJoueurs,
-    SlcModeJeu,
+    Menu,
   },
-  methods: {
-    printPlayers() {
-      console.log(JSON.parse(this.$refs.SelecteurNbJoueurs.generateJSON()));
-    },
-    printMode() {
-      console.log(JSON.parse(this.$refs.SelecteurModeJeu.generateJSON()));
-    },
-  }
 }
 </script>
 
-<style>
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<style scoped>
 
 @font-face {
     font-family: ObjectSans-Heavy;
@@ -54,22 +33,6 @@ export default {
 @font-face {
     font-family: ObjectSans-Slanted;
     src: url('@/assets/fonts/PPObjectSans-Slanted.otf');
-}
-
-#playButton {
-  font-family: ObjectSans-Heavy;
-  padding: 10px 30px;
-  background-color: #518CE5;
-  opacity: .5;
-  color: white;
-  border: 0;
-  border-radius: 5px;
-}
-
-#playButton:hover {
-  opacity: 1;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  transition: all .2s ease;
 }
 
 </style>

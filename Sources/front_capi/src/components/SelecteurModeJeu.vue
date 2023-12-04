@@ -1,16 +1,14 @@
 <template>
     <div id="container">
-        <div>
-            <p id="nbJoueurs-label">MODES DE JEU</p>
-            <div
-                v-for="(mode, index) in modes"
-                :key="index"
-                class="mode"
-                :class="{ selected: selectedMode === index }"
-                @click="selectMode(index)"
-            >
-                {{ mode.toLocaleUpperCase() }}
-            </div>
+        <p id="mode-label">MODES DE JEU</p>
+        <div
+            v-for="(mode, index) in modes"
+            :key="index"
+            class="mode"
+            :class="{ selected: selectedMode === index }"
+            @click="selectMode(index)"
+        >
+            {{ mode.toLocaleUpperCase() }}
         </div>
     </div>
 </template>
@@ -47,13 +45,6 @@ export default {
 <style scoped>
 
 #container {
-    display: flex;
-    height: 90vh;
-    justify-content: center;
-    align-items: center;
-}
-
-#container > div {
     width: 300px;
     position: relative;
 }
