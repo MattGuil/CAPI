@@ -28,7 +28,7 @@
             </div>
         </div>
         <div>
-            <button>A VOTER !</button>
+            <button @click="tovote">A VOTER !</button>
         </div>
     </div>
 </template>
@@ -52,7 +52,7 @@ export default {
                 'cartes_interro.svg',
                 'cartes_cafe.svg'
             ],
-            selectedCard: "12",
+            selectedCard: "",
         };
     },
     computed: {
@@ -69,6 +69,11 @@ export default {
         },
         selectCard(index) {
             this.selectedCard = index;
+        },
+        tovote() {
+            if (this.selectedCard === 11) {
+                this.$router.push('/coffeebreak');
+            }
         }
     },
 }
