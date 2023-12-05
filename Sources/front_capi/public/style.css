@@ -28,3 +28,7 @@ button {
     width: 200px;
     transition: all .2s ease;    
 }
+
+button:hover {
+    box-shadow: 4px 4px 4px 0px rgba(81, 140, 229, .8);
+}
