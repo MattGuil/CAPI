@@ -32,3 +32,9 @@ button {
 button:hover {
     box-shadow: 4px 4px 4px 0px rgba(81, 140, 229, .8);
 }
+
+button:disabled {
+    box-shadow: none;
+    background-color: #333030;
+    opacity: .25;
+}

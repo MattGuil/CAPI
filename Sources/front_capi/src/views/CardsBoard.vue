@@ -28,7 +28,7 @@
             </div>
         </div>
         <div>
-            <button @click="tovote">A VOTER !</button>
+            <button @click="tovote" :disabled="selectedCard === undefined">A VOTER !</button>
         </div>
     </div>
 </template>
@@ -52,7 +52,7 @@ export default {
                 'cartes_interro.svg',
                 'cartes_cafe.svg'
             ],
-            selectedCard: "",
+            selectedCard: undefined,
         };
     },
     computed: {
