@@ -1,5 +1,5 @@
 <template>
-    <div id="menu">
+    <div>
         <div id="leftDiv">
             <div>
                 <p id="title">PLANNING<br>POKER</p>
@@ -44,7 +44,7 @@ methods: {
 
 <style scoped>
 
-#menu {
+#content {
     display: flex;
     width: 100%;
     height: 100%;
@@ -95,23 +95,6 @@ methods: {
     right: 10%; 
     transform-origin: 89% 50%;
     transform: rotate(-90deg);
-}
-
-#playButton {
-    font-family: ObjectSans-Heavy;
-    padding: 10px 30px;
-    background-color: #518CE5;
-    color: white;
-    border: 0;
-    border-radius: 5px;
-    height: 40px;
-    width: 200px;
-    transition: all .2s ease;
-}
-
-#playButton:hover {
-    opacity: 1;
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 </style>
