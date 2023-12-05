@@ -1,6 +1,6 @@
 <template>
   <router-view id="content"></router-view>
-  <p>PLANNING<br>POKER</p>
+  <p @click="this.$router.push('/');">PLANNING<br>POKER</p>
 </template>
 
 <script>
@@ -41,6 +41,12 @@ p {
   font-size: 1.5rem;
   transform: translate(-15%, -200%) rotate(-90deg);
   opacity: .5;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+p:hover {
+  opacity: .75;
 }
 
 </style>
