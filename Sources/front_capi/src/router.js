@@ -11,6 +11,11 @@ const routes = [
     name: "CardsBoard",
     component: () => import("@/views/CardsBoard.vue"),
   },
+  {
+    path: "/coffeebreak",
+    name: "CoffeeBreak",
+    component: () => import("@/views/CoffeeBreak.vue"),
+  },
 ];
 
 const router = createRouter({
