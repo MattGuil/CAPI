@@ -39,18 +39,18 @@ export default {
     data() {
         return {
             cards: [
-                'cartes_0.svg',
-                'cartes_1.svg',
-                'cartes_2.svg',
-                'cartes_3.svg',
-                'cartes_5.svg',
-                'cartes_8.svg',
-                'cartes_13.svg',
-                'cartes_20.svg',
-                'cartes_40.svg',
-                'cartes_100.svg',
-                'cartes_interro.svg',
-                'cartes_cafe.svg'
+                'cartes_0.png',
+                'cartes_1.png',
+                'cartes_2.png',
+                'cartes_3.png',
+                'cartes_5.png',
+                'cartes_8.png',
+                'cartes_13.png',
+                'cartes_20.png',
+                'cartes_40.png',
+                'cartes_100.png',
+                'cartes_interro.png',
+                'cartes_cafe.png'
             ],
             selectedCard: undefined,
         };
