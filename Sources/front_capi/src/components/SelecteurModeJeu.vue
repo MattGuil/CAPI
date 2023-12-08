@@ -33,12 +33,9 @@ export default {
             this.selectedMode = index;
         },
         generateJSON() {
-            const jsonData = {
-                modeJeu: this.modes[this.selectedMode],
-            };
-            return JSON.stringify(jsonData);
-        }
-    },
+            return this.modes[this.selectedMode];
+        },
+    }
 }
 </script>
   

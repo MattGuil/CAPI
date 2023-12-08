@@ -30,13 +30,29 @@ components: {
     SlcNbJoueurs,
     SlcModeJeu,
     InputsBacklogs
-    // Cartes,
 },
 methods: {
     generateJSON() {
-    console.log(JSON.parse(this.$refs.SelecteurModeJeu.generateJSON()));
-    console.log(JSON.parse(this.$refs.SelecteurNbJoueurs.generateJSON()));
-    console.log(JSON.parse(this.$refs.InputsBacklogs.generateJSON()));
+        const mode = this.$refs.SelecteurModeJeu.generateJSON();
+        const players = this.$refs.SelecteurNbJoueurs.generateJSON();
+        const backlogs = this.$refs.InputsBacklogs.generateJSON();
+
+        const data = {
+            mode: mode,
+            players: players,
+            backlogs: backlogs,
+        };
+
+        const jsonData = JSON.stringify(data);
+
+        const blob = new Blob([jsonData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'data.json'; // Nom du fichier JSON
+        link.click();
+
+        URL.revokeObjectURL(url);
     },
 }
 }

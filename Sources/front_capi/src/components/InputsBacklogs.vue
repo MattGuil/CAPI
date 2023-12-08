@@ -44,7 +44,7 @@ methods: {
         this.backlogs.splice(index, 1);
     },
     generateJSON() {
-        return JSON.stringify(this.backlogs);
+        return this.backlogs;
     }
 }
 

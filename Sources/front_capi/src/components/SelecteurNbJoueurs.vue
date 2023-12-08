@@ -67,11 +67,7 @@ export default {
             this.pseudos[index] = event.target.value.toUpperCase();
         },
         generateJSON() {
-            const jsonData = {
-                nbJoueurs: this.nbSelectedRect,
-                pseudos: this.pseudos
-            };
-            return JSON.stringify(jsonData);
+            return this.pseudos;
         }
     },
     updated() {
