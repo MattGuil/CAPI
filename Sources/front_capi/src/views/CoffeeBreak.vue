@@ -6,7 +6,7 @@
             <h2>LA PARTIE EST EN PAUSE</h2>
         </div>
         <div>
-            <button>REPRENDRE</button>
+            <button @click="this.$router.push('/dashboard');">REPRENDRE</button>
         </div>
     </div>
 </template>
@@ -42,23 +42,20 @@ export default {
 }
 
 img {
-    width: 200px;
-    opacity: .5;
-}
-
-h1, h2 {
-    color: #1E1E1E;
+    width: 150px;
+    opacity: .25;
 }
 
 h1 {
     font-family: ObjectSans-Heavy;
-    font-size: 3rem;
+    font-size: 2rem;
+    margin-top: 20px;
 }
 
 h2 {
     font-family: ObjectSans-Slanted;
     opacity: .8;
-    font-size: 1rem;
+    font-size: .75rem;
 }
 
 </style>

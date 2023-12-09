@@ -10,7 +10,7 @@
                 <p>BACKLOGS</p>
             </div>
             <div>
-                <button id="playButton" @click="generateJSON">JOUER</button>
+                <button id="playButton" @click="generateJSON, this.$router.push('/dashboard');">JOUER</button>
             </div>
         </div>
         <div id="rightDiv">
