@@ -1,8 +1,8 @@
 <template>
     <div>
         <div>
-            <h2>BACKLOG #2</h2>
-            <h1>barre de navigation</h1>
+            <h2>BACKLOG #3</h2>
+            <h1>formulaire de contact</h1>
             <h3>Vote de <strong>LÉA</strong></h3>
         </div>
         <div id="cards">
@@ -83,7 +83,6 @@ export default {
 
 h1, h2, h3 {
     padding-left: 5%;
-    color: #1E1E1E;
 }
 
 h1 {

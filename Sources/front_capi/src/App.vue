@@ -38,7 +38,7 @@ p {
   left: 0;
   font-family: ObjectSans-Heavy;
   line-height: .8;
-  font-size: 1.5rem;
+  font-size: 1rem;
   transform: translate(-15%, -200%) rotate(-90deg);
   opacity: .5;
   cursor: pointer;
