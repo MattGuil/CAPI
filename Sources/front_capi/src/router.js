@@ -21,6 +21,11 @@ const routes = [
     name: "CoffeeBreak",
     component: () => import("@/views/CoffeeBreak.vue"),
   },
+  {
+    path: "/results",
+    name: "Results",
+    component: () => import("@/views/Results.vue"),
+  },
 ];
 
 const router = createRouter({
