@@ -73,6 +73,8 @@ export default {
         tovote() {
             if (this.selectedCard === 11) {
                 this.$router.push('/coffeebreak');
+            } else {
+                this.$router.push('/chart');
             }
         }
     },
