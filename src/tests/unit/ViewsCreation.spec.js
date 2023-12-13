@@ -3,7 +3,7 @@ import { describe } from 'vitest';
 
 import Menu from "../../views/Menu.vue";
 import Dashboard from "../../views/Dashboard.vue";
-import Cardsboard from "../../views/Cardsboard.vue";
+import Cardsboard from "../../views/CardsBoard.vue";
 import CoffeeBreak from "../../views/CoffeeBreak.vue";
 import Results from "../../views/Results.vue";
 
