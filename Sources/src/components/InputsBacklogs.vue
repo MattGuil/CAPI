@@ -10,7 +10,7 @@
                 :value="backlog"
                 @input="onValueChange"
             >
-            <img src="@/assets/icons/bin.png" @click="removeBacklog(index)">
+            <img src="../assets/icons/bin.png" @click="removeBacklog(index)">
         </div>
         <button @click="addBacklog">ajouter un backlog</button>
     </div>

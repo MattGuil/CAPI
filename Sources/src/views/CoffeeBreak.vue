@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <img src="@/assets/icons/coffee.png" alt="">
+            <img src="../assets/icons/coffee.png" alt="">
             <h1>PAUSE CAFÉ !</h1>
             <h2>LA PARTIE EST EN PAUSE</h2>
         </div>

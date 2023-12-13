@@ -31,7 +31,7 @@
                 <p>{{ backlog }}</p>
                 <div>
                     <p v-if="backlogsStatus[backlog][0] == 1">{{ backlogsStatus[backlog][1] }}</p>
-                    <img v-if="backlogsStatus[backlog][0] == 2" src="@/assets/icons/redo.png">
+                    <img v-if="backlogsStatus[backlog][0] == 2" src="../assets/icons/redo.png">
                 </div>
             </div>
             <p>TOUR <strong>1</strong></p>
