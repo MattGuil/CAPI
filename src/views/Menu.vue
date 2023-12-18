@@ -14,6 +14,7 @@
             </div>
         </div>
         <div id="rightDiv">
+            <img src="@/assets/icons/import.png" @click="importBacklogs">
             <InputsBacklogs ref="InputsBacklogs"/>
         </div>
     </div>
@@ -56,6 +57,17 @@ methods: {
             if (selectedFile) {
                 const reader = new FileReader();
                 reader.onload = () => {
+                    try {
+                        const fileContent = JSON.parse(reader.result);
+                        this.$refs.InputsBacklogs.importJSON(fileContent);
+                    } catch (error) {
+                        console.error('Erreur lors de la lecture du fichier :', error);
+                    }
+                };
+                reader.readAsText(selectedFile);
+            }
+        });
+        fileInput.click();
     },
 }
 }
@@ -101,6 +113,7 @@ methods: {
     align-items: center;
 } 
 
+#leftDiv > div:nth-child(2) > p {
     position: absolute;
     right: 10%; 
     transform-origin: 89% 50%;
@@ -113,14 +126,20 @@ methods: {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #rightDiv img {
     width: 32px;
     position: absolute;
-    transform-origin: 89% 50%;
     top: 15px;
+    right: 15px;
+    opacity: .5;
+    transition: all .2s ease;
 }
+
+#rightDiv img:hover {
+    opacity: 1;
 }
 
 </style>
