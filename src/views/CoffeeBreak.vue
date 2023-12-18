@@ -14,6 +14,22 @@
 <script>
 export default {
     name: 'CoffeeBreak',
+    mounted() {
+        const backlogs = localStorage.getItem('partie') ? JSON.parse(localStorage.getItem('partie')).backlogs : null;
+
+        if (backlogs) {
+            const data = { backlogs };
+            const jsonData = JSON.stringify(data);
+
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'backlogs.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+    }
 }
 </script>
 

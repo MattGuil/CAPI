@@ -41,15 +41,11 @@ export default {
                 "LÉA",
                 "HUGO",
             ],
-            backlogs: [
-                ["page d'accueil statique", 3],
-                ["barre de navigation", 2],
-                ["formulaire de contact", 5],
-                ["intégration de contenu", 20],
-                ["footer", 1],
-                ["adaptabilité mobile", 40],
-            ]
+            backlogs: [],
         };
+    },
+    mounted() {
+        this.backlogs = JSON.parse(localStorage.getItem('partie')).backlogs;
     },
     computed: {
         listPlayers() {
