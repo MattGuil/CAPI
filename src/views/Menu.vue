@@ -10,7 +10,7 @@
                 <p>BACKLOGS</p>
             </div>
             <div>
-                <button id="playButton" @click="generateJSON, this.$router.push('/dashboard');">JOUER</button>
+                <button id="playButton" @click="generatePartie">JOUER</button>
             </div>
         </div>
         <div id="rightDiv">
@@ -20,9 +20,11 @@
 </template>
 
 <script>
-import SlcNbJoueurs from '../components/SelecteurNbJoueurs.vue'
-import SlcModeJeu from '../components/SelecteurModeJeu.vue'
+import SlcNbJoueurs from '../components/SelecteurNbJoueurs.vue';
+import SlcModeJeu from '../components/SelecteurModeJeu.vue';
 import InputsBacklogs from '../components/InputsBacklogs.vue';
+
+import Partie from '@/patterns.js';
 
 export default {
 name: 'MenuVue',
@@ -32,27 +34,28 @@ components: {
     InputsBacklogs
 },
 methods: {
-    generateJSON() {
-        const mode = this.$refs.SelecteurModeJeu.generateJSON();
-        const players = this.$refs.SelecteurNbJoueurs.generateJSON();
-        const backlogs = this.$refs.InputsBacklogs.generateJSON();
+    generatePartie() {
+        // instanciation du Singleton Partie
+        let partie = new Partie();
 
-        const data = {
-            mode: mode,
-            players: players,
-            backlogs: backlogs,
-        };
+        // récupération du mode de jeu sélectionné, de la liste joueurs et des backlogs
+        partie.mode = this.$refs.SelecteurModeJeu.generateJSON();
+        partie.players = this.$refs.SelecteurNbJoueurs.generateJSON();
+        partie.backlogs = this.$refs.InputsBacklogs.generateJSON();
 
-        const jsonData = JSON.stringify(data);
+        // sauvegarde de l'objet Partie dans le local storage
+        localStorage.setItem('partie', JSON.stringify(partie));
 
-        const blob = new Blob([jsonData], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'data.json'; // Nom du fichier JSON
-        link.click();
-
-        URL.revokeObjectURL(url);
+        this.$router.push('/dashboard');
+    },
+    importBacklogs() {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.addEventListener('change', event => {
+            const selectedFile = event.target.files[0];
+            if (selectedFile) {
+                const reader = new FileReader();
+                reader.onload = () => {
     },
 }
 }
@@ -98,6 +101,12 @@ methods: {
     align-items: center;
 } 
 
+    position: absolute;
+    right: 10%; 
+    transform-origin: 89% 50%;
+    transform: rotate(-90deg);
+}
+
 #rightDiv {
     height: 100%;
     background-color: #518CE5;
@@ -106,11 +115,12 @@ methods: {
     align-items: center;
 }
 
-#leftDiv > div:nth-child(2) > p {
+#rightDiv img {
+    width: 32px;
     position: absolute;
-    right: 10%; 
     transform-origin: 89% 50%;
-    transform: rotate(-90deg);
+    top: 15px;
+}
 }
 
 </style>
