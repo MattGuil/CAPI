@@ -7,7 +7,7 @@
             <input 
                 type="text"
                 :id="index"
-                :value="backlog[0]"
+                :value="backlog"
                 @input="onValueChange"
             >
             <img src="../assets/icons/bin.png" @click="removeBacklog(index)">
@@ -22,12 +22,12 @@ export default {
 data() {
     return {
         backlogs: [
-            ["page d'accueil statique", "?"],
-            ["barre de navigation", "?"],
-            ["formulaire de contact", "?"],
-            ["intégration de contenu", "?"],
-            ["footer", "?"],
-            ["adaptabilité mobile", "?"],
+            "page d'accueil statique",
+            "barre de navigation",
+            "formulaire de contact",
+            "intégration de contenu",
+            "footer",
+            "adaptabilité mobile",
         ],
     };
 },
@@ -48,7 +48,10 @@ methods: {
     },
     importJSON(fileContent) {
         if (fileContent['backlogs']) {
-            this.backlogs = fileContent['backlogs'];
+            this.backlogs = [];
+            fileContent['backlogs'].forEach(backlog => {
+                this.backlogs.push(backlog['label']);
+            });
         } else {
             alert('Ce fichier ne contient pas de backlogs.');
         }

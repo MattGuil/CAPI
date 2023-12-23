@@ -29,23 +29,35 @@ import Partie from '@/patterns.js';
 
 export default {
 name: 'MenuVue',
+data() {
+    return {
+        partie: undefined,
+    };
+},
 components: {
     SlcNbJoueurs,
     SlcModeJeu,
     InputsBacklogs
 },
+mounted() {
+    // instanciation du Singleton Partie
+    this.partie = new Partie();
+    localStorage.setItem('partie', JSON.stringify(this.partie));
+    localStorage.setItem('currentPlayer', 0);
+    localStorage.setItem('currentBacklog', 0);
+},
 methods: {
     generatePartie() {
-        // instanciation du Singleton Partie
-        let partie = new Partie();
+        localStorage.setItem('partie', 
+            this.partie.reload(
+                this.$refs.SelecteurModeJeu.generateJSON(),
+                this.$refs.SelecteurNbJoueurs.generateJSON(),
+                this.$refs.InputsBacklogs.generateJSON()
+            )
+        );
 
-        // récupération du mode de jeu sélectionné, de la liste joueurs et des backlogs
-        partie.mode = this.$refs.SelecteurModeJeu.generateJSON();
-        partie.players = this.$refs.SelecteurNbJoueurs.generateJSON();
-        partie.backlogs = this.$refs.InputsBacklogs.generateJSON();
-
-        // sauvegarde de l'objet Partie dans le local storage
-        localStorage.setItem('partie', JSON.stringify(partie));
+        localStorage.setItem('currentPlayer', 0);
+        localStorage.setItem('currentBacklog', 0);
 
         this.$router.push('/dashboard');
     },

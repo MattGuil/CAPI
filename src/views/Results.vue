@@ -7,14 +7,14 @@
             </div> 
             <div>
                 <div v-for="(backlog, index) in backlogs" :key="index" class="backlogs">
-                    <p>{{ backlog[0] }}</p>
+                    <p>{{ backlog['label'] }}</p>
                     <div>
-                        <p>{{ backlog[1] }}</p>
+                        <p>{{ backlog['value'] }}</p>
                     </div>
                 </div>
             </div>
             <div>
-                <button>GÉNERER LE FICHIER JSON</button>
+                <button @click="generateFinalJSON">GÉNERER LE FICHIER JSON</button>
                 <button @click="this.$router.push('/');">MENU</button>
             </div>
         </div>
@@ -33,24 +33,40 @@ export default {
     name: 'ResultsVue',
     data() {
         return {
-            players: [
-                "CAMILLE",
-                "LUCAS",
-                "ÉLÉONORE",
-                "ANTOINE",
-                "LÉA",
-                "HUGO",
-            ],
+            players: [],
             backlogs: [],
         };
     },
     mounted() {
+        this.players = JSON.parse(localStorage.getItem('partie')).players;
         this.backlogs = JSON.parse(localStorage.getItem('partie')).backlogs;
     },
     computed: {
         listPlayers() {
-            return this.players.join(", ");
-        }        
+            let playersTab = [];
+            this.players.forEach(player => {
+                playersTab.push(player['pseudo']);
+            });
+            return playersTab.join(', ');
+        }
+    },
+    methods: {
+        generateFinalJSON() {
+            const backlogs = localStorage.getItem('partie') ? JSON.parse(localStorage.getItem('partie'))['backlogs'] : null;
+
+            if (backlogs) {
+                const data = { backlogs };
+                const jsonData = JSON.stringify(data);
+
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'backlogs.json';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+        }
     }
 }
 </script>

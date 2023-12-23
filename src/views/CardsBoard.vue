@@ -1,9 +1,9 @@
 <template>
     <div>
         <div>
-            <h2>BACKLOG #3</h2>
-            <h1>formulaire de contact</h1>
-            <h3>Vote de <strong>LÉA</strong></h3>
+            <h2>BACKLOG #{{ parseInt(currentBacklog) + 1 }}</h2>
+            <h1>{{ currentBacklogLabel }}</h1>
+            <h3>Vote de <strong>{{ currentPlayerPseudo }}</strong></h3>
         </div>
         <div id="cards">
             <div>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div>
-            <button @click="tovote" :disabled="selectedCard === undefined">A VOTER !</button>
+            <button @click="tovote" :disabled="selectedCard === undefined">A VOTÉ !</button>
         </div>
     </div>
 </template>
@@ -53,7 +53,20 @@ export default {
                 'cartes_cafe.png'
             ],
             selectedCard: undefined,
+            currentBacklog: 0,
+            currentPlayer: 0,
+            backlogs: [],
+            players: [],
+            currentBacklogLabel: undefined,
+            currentPlayerPseudo: undefined,
         };
+    },
+    mounted() {
+        this.currentBacklog = localStorage.getItem('currentBacklog');
+        this.currentPlayer = localStorage.getItem('currentPlayer');
+        this.partie = JSON.parse(localStorage.getItem('partie'));
+        this.currentBacklogLabel = this.partie['backlogs'][this.currentBacklog]['label'];
+        this.currentPlayerPseudo = this.partie['players'][this.currentPlayer]['pseudo'];
     },
     computed: {
         normalCards() {
@@ -71,10 +84,64 @@ export default {
             this.selectedCard = index;
         },
         tovote() {
-            if (this.selectedCard === 11) {
-                this.$router.push('/coffeebreak');
+            switch(this.selectedCard) {
+                case 0:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 0;
+                    break;
+                case 1:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 1;
+                    break;
+                case 2:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 2;
+                    break;
+                case 3:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 3;
+                    break;
+                case 4:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 5;
+                    break;
+                case 5:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 8;
+                    break;
+                case 6:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 13;
+                    break;
+                case 7:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 20;
+                    break;
+                case 8:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 40;
+                    break;
+                case 9:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = 100;
+                    break;
+                case 10:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = "?";
+                    break;
+                case 11:
+                    this.partie['players'][this.currentPlayer]['hasVoted'] = "coffee";
+                    break;
+            }
+            
+            if (parseInt(this.currentPlayer) + 1 < this.partie['players'].length) {
+                localStorage.setItem('currentPlayer', parseInt(this.currentPlayer) + 1);
+                localStorage.setItem('partie', JSON.stringify(this.partie));
+                this.$router.push('/dashboard');
             } else {
-                this.$router.push('/chart');
+                this.partie['backlogs'][this.currentBacklog]['value'] = 10;
+                this.partie['backlogs'][this.currentBacklog]['state'] = 1;
+                this.partie['players'].forEach(player => {
+                    player['hasVoted'] = false;
+                });
+                localStorage.setItem('currentPlayer', 0);
+                if (parseInt(this.currentBacklog) + 1 < this.partie['backlogs'].length) {
+                    localStorage.setItem('currentBacklog', parseInt(this.currentBacklog) + 1);
+                    localStorage.setItem('partie', JSON.stringify(this.partie));
+                    this.$router.push('/dashboard');
+                } else {
+                    localStorage.setItem('partie', JSON.stringify(this.partie));
+                    this.$router.push('/results');
+                }
             }
         }
     },

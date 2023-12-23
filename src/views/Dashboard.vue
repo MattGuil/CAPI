@@ -2,17 +2,17 @@
     <div>
         <div id="leftDiv">
             <div>
-                <h2>BACKLOG #3</h2>
-                <h1>formulaire de contact</h1>
+                <h2>BACKLOG #{{ parseInt(currentBacklog) + 1 }}</h2>
+                <h1>{{ currentBacklogLabel }}</h1>
             </div> 
             <div>
                 <div v-for="(player, index) in players" :key="index" class="player-status">
-                    <div :class="{ 'hasVoted': playersStatus[player] }"></div>
-                    <p>{{ player }}</p>
+                    <div :class="{ 'hasVoted': player['hasVoted'] }"></div>
+                    <p>{{ player['pseudo'] }}</p>
                 </div>
             </div>
             <div>
-                <p><strong>LÉA</strong>, à ton tour de voter.</p>
+                <p><strong>{{ currentPlayerPseudo }}</strong>, à ton tour de voter.</p>
                 <button @click="this.$router.push('/cardsboard');">></button>
             </div>
         </div>
@@ -21,17 +21,17 @@
                 :key="index" 
                 class="backlog-status"
                 :class="{ 
-                    'processed': backlogsStatus[backlog][0] == 1,
-                    'current': backlogsStatus[backlog][0] == 0,
-                    'loop':  backlogsStatus[backlog][0] == 2,
-                    'notProcessed': backlogsStatus[backlog][0] == -1,
+                    'notProcessed': index != parseInt(currentBacklog) && backlog['state'] != 1 && backlog['state'] != 2,
+                    'current': index == parseInt(currentBacklog),
+                    'processed': backlog['state'] == 1,
+                    'loop':  backlog['state'] == 2,
                 }"
             >
                 <div></div>
-                <p>{{ backlog }}</p>
+                <p>{{ backlog['label'] }}</p>
                 <div>
-                    <p v-if="backlogsStatus[backlog][0] == 1">{{ backlogsStatus[backlog][1] }}</p>
-                    <img v-if="backlogsStatus[backlog][0] == 2" src="../assets/icons/redo.png">
+                    <p v-if="backlog['state'] == 1">{{ backlog['value'] }}</p>
+                    <img v-if="backlog['state'] == 2" src="../assets/icons/redo.png">
                 </div>
             </div>
             <p>TOUR <strong>1</strong></p>
@@ -44,43 +44,22 @@ export default {
     name: 'DashboardVue',
     data() {
         return {
-            players: [
-                "CAMILLE",
-                "LUCAS",
-                "ÉLÉONORE",
-                "ANTOINE",
-                "LÉA",
-                "HUGO",
-            ],
-            playersStatus: {
-                "CAMILLE": true,
-                "LUCAS": true,
-                "ÉLÉONORE": true,
-                "ANTOINE": true,
-                "LÉA": false,
-                "HUGO": false,
-            },
-            backlogs: [
-                "page d'accueil statique",
-                "barre de navigation",
-                "formulaire de contact",
-                "intégration de contenu",
-                "footer",
-                "adaptabilité mobile",
-            ],
-            backlogsStatus: {
-                "page d'accueil statique": [1, 3],
-                "barre de navigation": [2, undefined],
-                "formulaire de contact": [0, undefined],
-                "intégration de contenu": [-1, undefined],
-                "footer": [-1, undefined],
-                "adaptabilité mobile": [-1, undefined],
-            },
+            currentBacklog: 0,
+            currentPlayer: 0,
+            backlogs: [],
+            players: [],
+            currentBacklogLabel: undefined,
+            currentPlayerPseudo: undefined,
         };
     },
-    methods: {
-        
-    }
+    mounted() {
+        this.currentBacklog = localStorage.getItem('currentBacklog');
+        this.currentPlayer = localStorage.getItem('currentPlayer');
+        this.backlogs = JSON.parse(localStorage.getItem('partie')).backlogs;
+        this.players = JSON.parse(localStorage.getItem('partie')).players;
+        this.currentBacklogLabel = this.backlogs[this.currentBacklog]['label'];
+        this.currentPlayerPseudo = this.players[this.currentPlayer]['pseudo'];
+    },
 }
 </script>
 

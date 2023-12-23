@@ -26,8 +26,8 @@
                     v-if="isSelected(rectIndex)"
                     class="text-field"
                     placeholder="entrer un pseudo"
-                    :value="pseudos[10 - rectIndex]"
-                    @input="updatePseudos($event, 10 - rectIndex)"
+                    :value="pseudos[10 - rectIndex - 1]"
+                    @input="updatePseudos($event, 10 - rectIndex - 1)"
                 >
             </div>
         </div>
@@ -43,7 +43,7 @@ export default {
             selectedRectIndex: 10,
             nbHoveredRect: 0,
             nbSelectedRect: 0,
-            pseudos: {},
+            pseudos: [],
         };
     },
     methods: {
@@ -63,7 +63,6 @@ export default {
             return this.selectedRectIndex !== null && rectIndex >= this.selectedRectIndex;
         },
         updatePseudos(event, index) {
-            this.pseudos[index] = event.target.value;
             this.pseudos[index] = event.target.value.toUpperCase();
         },
         generateJSON() {
