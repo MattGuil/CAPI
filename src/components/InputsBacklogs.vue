@@ -21,14 +21,7 @@ export default {
 
 data() {
     return {
-        backlogs: [
-            "page d'accueil statique",
-            "barre de navigation",
-            "formulaire de contact",
-            "intégration de contenu",
-            "footer",
-            "adaptabilité mobile",
-        ],
+        backlogs: [],
     };
 },
 

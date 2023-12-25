@@ -10,7 +10,7 @@
                 <p>BACKLOGS</p>
             </div>
             <div>
-                <button id="playButton" @click="generatePartie">JOUER</button>
+                <button id="playButton" @click="createPartie">JOUER</button>
             </div>
         </div>
         <div id="rightDiv">
@@ -47,9 +47,9 @@ mounted() {
     localStorage.setItem('currentBacklog', 0);
 },
 methods: {
-    generatePartie() {
+    createPartie() {
         localStorage.setItem('partie', 
-            this.partie.reload(
+            this.partie.load(
                 this.$refs.SelecteurModeJeu.generateJSON(),
                 this.$refs.SelecteurNbJoueurs.generateJSON(),
                 this.$refs.InputsBacklogs.generateJSON()

@@ -3,59 +3,15 @@
 class Partie {
     constructor() {
         if (!Partie.instance) {
-            this.mode = "strict";
-            this.players = [
-                {
-                    "pseudo": "A",
-                    "hasVoted": false
-                },
-                {
-                    "pseudo": "B",
-                    "hasVoted": false
-                },
-                {
-                    "pseudo": "C",
-                    "hasVoted": false
-                },
-            ];
-            this.backlogs = [
-                {
-                    "label": "page d'accueil statique",
-                    "state": 1,
-                    "value": 3,
-                },
-                {
-                    "label": "barre de navigation",
-                    "state": 1,
-                    "value": 5,
-                },
-                {
-                    "label": "formulaire de contact",
-                    "state": 1,
-                    "value": 8,
-                },
-                {
-                    "label": "intégration de contenu",
-                    "state": 1,
-                    "value": 5,
-                },
-                {
-                    "label": "footer",
-                    "state": 1,
-                    "value": 5,
-                },
-                {
-                    "label": "adaptabilité mobile",
-                    "state": 1,
-                    "value": 40,
-                }
-            ];
+            this.mode = "";
+            this.players = [];
+            this.backlogs = [];
             Partie.instance = this;
         }
         return Partie.instance;
     }
 
-    reload(mode, players, backlogs) {
+    load(mode, players, backlogs) {
         this.mode = mode;
         
         this.players = [];
@@ -69,6 +25,14 @@ class Partie {
         });
 
         return JSON.stringify(Partie.instance);
+    }
+
+    getCurrentBacklog(backlogs) {
+        backlogs.forEach((index, backlog) => {
+            if (backlog['state'] == -1)
+                return index;
+        });
+        return -1;
     }
 }
 
