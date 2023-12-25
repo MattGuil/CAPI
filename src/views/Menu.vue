@@ -25,7 +25,7 @@ import SlcNbJoueurs from '../components/SelecteurNbJoueurs.vue';
 import SlcModeJeu from '../components/SelecteurModeJeu.vue';
 import InputsBacklogs from '../components/InputsBacklogs.vue';
 
-import Partie from '@/patterns.js';
+import Partie from '@/Partie.js';
 
 export default {
 name: 'MenuVue',

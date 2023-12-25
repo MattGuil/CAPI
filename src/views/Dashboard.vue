@@ -55,8 +55,8 @@ export default {
     mounted() {
         this.currentBacklog = localStorage.getItem('currentBacklog');
         this.currentPlayer = localStorage.getItem('currentPlayer');
-        this.backlogs = JSON.parse(localStorage.getItem('partie')).backlogs;
-        this.players = JSON.parse(localStorage.getItem('partie')).players;
+        this.backlogs = JSON.parse(localStorage.getItem('partie'))['backlogs'];
+        this.players = JSON.parse(localStorage.getItem('partie'))['players'];
         this.currentBacklogLabel = this.backlogs[this.currentBacklog]['label'];
         this.currentPlayerPseudo = this.players[this.currentPlayer]['pseudo'];
     },

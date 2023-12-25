@@ -38,8 +38,8 @@ export default {
         };
     },
     mounted() {
-        this.players = JSON.parse(localStorage.getItem('partie')).players;
-        this.backlogs = JSON.parse(localStorage.getItem('partie')).backlogs;
+        this.players = JSON.parse(localStorage.getItem('partie'))['players'];
+        this.backlogs = JSON.parse(localStorage.getItem('partie'))['backlogs'];
     },
     computed: {
         listPlayers() {
@@ -94,7 +94,7 @@ export default {
 }
 
 #leftDiv > div:nth-child(2) {
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -137,6 +137,7 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 5px;
 }
 
 .backlogs > div:last-child {

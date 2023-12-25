@@ -1,5 +1,3 @@
-// DESIGN PATTERNS
-
 // Singleton
 
 class Partie {
@@ -28,28 +26,28 @@ class Partie {
                 },
                 {
                     "label": "barre de navigation",
-                    "state": 2,
-                    "value": undefined,
+                    "state": 1,
+                    "value": 5,
                 },
                 {
                     "label": "formulaire de contact",
-                    "state": 0,
-                    "value": undefined,
+                    "state": 1,
+                    "value": 8,
                 },
                 {
                     "label": "intégration de contenu",
-                    "state": 0,
-                    "value": undefined,
+                    "state": 1,
+                    "value": 5,
                 },
                 {
                     "label": "footer",
-                    "state": 0,
-                    "value": undefined,
+                    "state": 1,
+                    "value": 5,
                 },
                 {
                     "label": "adaptabilité mobile",
-                    "state": 0,
-                    "value": undefined,
+                    "state": 1,
+                    "value": 40,
                 }
             ];
             Partie.instance = this;

@@ -8,22 +8,22 @@
         <div id="cards">
             <div>
                 <img
-                    v-for="(card, index) in normalCards"
-                    :key="index" 
-                    :id="index"
-                    :class="[{'selected' : isSelected(index)}]"
-                    @click="selectCard(index)"
-                    :src="'https://sgu.ovh/matt/CAPI/' + card"
+                    v-for="key in normalCards"
+                    :key="key" 
+                    :id="key"
+                    :class="[{'selected' : cards[key].isSelected}]"
+                    @click="clickOnCard(key)"
+                    :src="'https://sgu.ovh/matt/CAPI/' + cards[key].fileName"
                 >
             </div>
             <div>
                 <img
-                    v-for="(card, index) in specialCards" 
-                    :key="index" 
-                    :id="index"
-                    :class="[{'selected' : isSelected(index + 10)}]"
-                    @click="selectCard(index + 10)"
-                    :src="'https://sgu.ovh/matt/CAPI/' + card"
+                    v-for="key in specialCards" 
+                    :key="key" 
+                    :id="key"
+                    :class="[{'selected' : cards[key].isSelected}]"
+                    @click="clickOnCard(key)"
+                    :src="'https://sgu.ovh/matt/CAPI/' + cards[key].fileName"
                 >
             </div>
         </div>
@@ -34,24 +34,27 @@
 </template>
 
 <script>
+import Card from '@/Card.js';
+import computeVote from '@/Vote.js';
+
 export default {
     name: 'CardsBoard',
     data() {
         return {
-            cards: [
-                'cartes_0.png',
-                'cartes_1.png',
-                'cartes_2.png',
-                'cartes_3.png',
-                'cartes_5.png',
-                'cartes_8.png',
-                'cartes_13.png',
-                'cartes_20.png',
-                'cartes_40.png',
-                'cartes_100.png',
-                'cartes_interro.png',
-                'cartes_cafe.png'
-            ],
+            cards: {
+                0: new Card('cartes_0.png'),
+                1: new Card('cartes_1.png'),
+                2: new Card('cartes_2.png'),
+                3: new Card('cartes_3.png'),
+                5: new Card('cartes_5.png'),
+                8: new Card('cartes_8.png'),
+                13: new Card('cartes_13.png'),
+                20: new Card('cartes_20.png'),
+                40: new Card('cartes_40.png'),
+                100: new Card('cartes_100.png'),
+                '?': new Card('cartes_interro.png'),
+                'coffee': new Card('cartes_cafe.png'),
+            },
             selectedCard: undefined,
             currentBacklog: 0,
             currentPlayer: 0,
@@ -70,80 +73,47 @@ export default {
     },
     computed: {
         normalCards() {
-            return this.cards.slice(0, 10);
+            return Object.keys(this.cards).filter(key => !isNaN(key));
         },
         specialCards() {
-            return this.cards.slice(-2);
+            return Object.keys(this.cards).filter(key => isNaN(key));
         },
     },
     methods: {
-        isSelected(index) {
-            return index == this.selectedCard;
+        isSelected(card) {
+            return card.isSelected();
         },
-        selectCard(index) {
-            this.selectedCard = index;
+        clickOnCard(key) {
+            Object.keys(this.cards).forEach(key => {
+                this.cards[key].deselect();
+            });
+            this.cards[key].select();
+            this.selectedCard = key;
         },
         tovote() {
-            switch(this.selectedCard) {
-                case 0:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 0;
-                    break;
-                case 1:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 1;
-                    break;
-                case 2:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 2;
-                    break;
-                case 3:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 3;
-                    break;
-                case 4:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 5;
-                    break;
-                case 5:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 8;
-                    break;
-                case 6:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 13;
-                    break;
-                case 7:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 20;
-                    break;
-                case 8:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 40;
-                    break;
-                case 9:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = 100;
-                    break;
-                case 10:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = "?";
-                    break;
-                case 11:
-                    this.partie['players'][this.currentPlayer]['hasVoted'] = "coffee";
-                    break;
-            }
-            
+            this.partie['players'][this.currentPlayer]['hasVoted'] = this.selectedCard;
+            localStorage.setItem('partie', JSON.stringify(this.partie));
+
             if (parseInt(this.currentPlayer) + 1 < this.partie['players'].length) {
                 localStorage.setItem('currentPlayer', parseInt(this.currentPlayer) + 1);
-                localStorage.setItem('partie', JSON.stringify(this.partie));
                 this.$router.push('/dashboard');
             } else {
-                this.partie['backlogs'][this.currentBacklog]['value'] = 10;
-                this.partie['backlogs'][this.currentBacklog]['state'] = 1;
+                let voteResult = computeVote(JSON.parse(localStorage.getItem('partie'))['players'], JSON.parse(localStorage.getItem('partie'))['mode']);
+                this.partie['backlogs'][this.currentBacklog]['value'] = voteResult['value'];
+                this.partie['backlogs'][this.currentBacklog]['state'] = voteResult['state'];
                 this.partie['players'].forEach(player => {
                     player['hasVoted'] = false;
                 });
+                localStorage.setItem('partie', JSON.stringify(this.partie));
                 localStorage.setItem('currentPlayer', 0);
                 if (parseInt(this.currentBacklog) + 1 < this.partie['backlogs'].length) {
                     localStorage.setItem('currentBacklog', parseInt(this.currentBacklog) + 1);
-                    localStorage.setItem('partie', JSON.stringify(this.partie));
                     this.$router.push('/dashboard');
                 } else {
-                    localStorage.setItem('partie', JSON.stringify(this.partie));
                     this.$router.push('/results');
                 }
             }
-        }
+        },
     },
 }
 </script>
