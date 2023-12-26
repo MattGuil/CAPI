@@ -38,8 +38,8 @@ export default {
         };
     },
     mounted() {
-        this.players = JSON.parse(localStorage.getItem('partie'))['players'];
-        this.backlogs = JSON.parse(localStorage.getItem('partie'))['backlogs'];
+        this.players = this.$store.state.partie.players;
+        this.backlogs = this.$store.state.partie.backlogs;
     },
     computed: {
         listPlayers() {
@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         generateFinalJSON() {
-            const backlogs = localStorage.getItem('partie') ? JSON.parse(localStorage.getItem('partie'))['backlogs'] : null;
+            const backlogs = this.$store.state.partie ? this.$store.state.partie.backlogs : null;
 
             if (backlogs) {
                 const data = { backlogs };

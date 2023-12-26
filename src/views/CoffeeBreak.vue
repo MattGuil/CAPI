@@ -15,7 +15,7 @@
 export default {
     name: 'CoffeeBreak',
     mounted() {
-        const backlogs = localStorage.getItem('partie') ? JSON.parse(localStorage.getItem('partie'))['backlogs'] : null;
+        const backlogs = this.$store.state.partie ? this.$store.state.partie.backlogs : null;
 
         if (backlogs) {
             const data = { backlogs };

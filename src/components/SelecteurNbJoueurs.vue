@@ -67,6 +67,10 @@ export default {
         },
         generateJSON() {
             return this.pseudos;
+        },
+        playersOk() {
+            const filledPseudos = this.pseudos.filter(pseudo => pseudo.trim() !== '');
+            return filledPseudos.length >= 2 && this.pseudos.length == filledPseudos.length;
         }
     },
     updated() {

@@ -40,6 +40,7 @@
 </template>
 
 <script>
+
 export default {
     name: 'DashboardVue',
     data() {
@@ -53,10 +54,10 @@ export default {
         };
     },
     mounted() {
-        this.currentBacklog = localStorage.getItem('currentBacklog');
-        this.currentPlayer = localStorage.getItem('currentPlayer');
-        this.backlogs = JSON.parse(localStorage.getItem('partie'))['backlogs'];
-        this.players = JSON.parse(localStorage.getItem('partie'))['players'];
+        this.currentBacklog = this.$store.state.partie.currentBacklog;
+        this.currentPlayer = this.$store.state.partie.currentPlayer;
+        this.backlogs = this.$store.state.partie.backlogs;
+        this.players = this.$store.state.partie.players;
         this.currentBacklogLabel = this.backlogs[this.currentBacklog]['label'];
         this.currentPlayerPseudo = this.players[this.currentPlayer]['pseudo'];
     },

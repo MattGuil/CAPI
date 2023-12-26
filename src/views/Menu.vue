@@ -21,67 +21,59 @@
 </template>
 
 <script>
+
 import SlcNbJoueurs from '../components/SelecteurNbJoueurs.vue';
 import SlcModeJeu from '../components/SelecteurModeJeu.vue';
 import InputsBacklogs from '../components/InputsBacklogs.vue';
 
-import Partie from '@/Partie.js';
-
 export default {
-name: 'MenuVue',
-data() {
-    return {
-        partie: undefined,
-    };
-},
-components: {
-    SlcNbJoueurs,
-    SlcModeJeu,
-    InputsBacklogs
-},
-mounted() {
-    // instanciation du Singleton Partie
-    this.partie = new Partie();
-    localStorage.setItem('partie', JSON.stringify(this.partie));
-    localStorage.setItem('currentPlayer', 0);
-    localStorage.setItem('currentBacklog', 0);
-},
-methods: {
-    createPartie() {
-        localStorage.setItem('partie', 
-            this.partie.load(
-                this.$refs.SelecteurModeJeu.generateJSON(),
-                this.$refs.SelecteurNbJoueurs.generateJSON(),
-                this.$refs.InputsBacklogs.generateJSON()
-            )
-        );
-
-        localStorage.setItem('currentPlayer', 0);
-        localStorage.setItem('currentBacklog', 0);
-
-        this.$router.push('/dashboard');
+    name: 'MenuVue',
+    data() {
+        return {
+            partie: undefined,
+        };
     },
-    importBacklogs() {
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.addEventListener('change', event => {
-            const selectedFile = event.target.files[0];
-            if (selectedFile) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    try {
-                        const fileContent = JSON.parse(reader.result);
-                        this.$refs.InputsBacklogs.importJSON(fileContent);
-                    } catch (error) {
-                        console.error('Erreur lors de la lecture du fichier :', error);
-                    }
-                };
-                reader.readAsText(selectedFile);
+    components: {
+        SlcNbJoueurs,
+        SlcModeJeu,
+        InputsBacklogs
+    },
+    methods: {
+        importBacklogs() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.addEventListener('change', event => {
+                const selectedFile = event.target.files[0];
+                if (selectedFile) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        try {
+                            const fileContent = JSON.parse(reader.result);
+                            this.$refs.InputsBacklogs.importJSON(fileContent);
+                        } catch (error) {
+                            console.error('Erreur lors de la lecture du fichier :', error);
+                        }
+                    };
+                    reader.readAsText(selectedFile);
+                }
+            });
+            fileInput.click();
+        },
+        isPlayButtonEnabled() {
+            return this.$refs.InputsBacklogs.backlogsOk() && this.$refs.SelecteurNbJoueurs.playersOk();
+        },
+        createPartie() {
+            if (this.$refs.InputsBacklogs.backlogsOk() && this.$refs.SelecteurNbJoueurs.playersOk()) {
+                const mode = this.$refs.SelecteurModeJeu.generateJSON();
+                const players = this.$refs.SelecteurNbJoueurs.generateJSON();
+                const backlogs = this.$refs.InputsBacklogs.generateJSON();
+
+                this.$store.dispatch('createPartieInstance', { mode, players, backlogs });
+                
+                this.$router.push('/dashboard');
             }
-        });
-        fileInput.click();
-    },
-}
+        },
+    }
 }
 </script>
 

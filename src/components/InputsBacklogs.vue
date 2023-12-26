@@ -49,6 +49,9 @@ methods: {
             alert('Ce fichier ne contient pas de backlogs.');
         }
     },
+    backlogsOk() {
+        return this.backlogs.some(backlog => backlog.trim() !== '');
+    },
 }
 
 };

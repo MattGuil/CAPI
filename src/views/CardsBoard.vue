@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <h2>BACKLOG #{{ parseInt(currentBacklog) + 1 }}</h2>
+            <h2>BACKLOG #{{ currentBacklogDisplay }}</h2>
             <h1>{{ currentBacklogLabel }}</h1>
             <h3>Vote de <strong>{{ currentPlayerPseudo }}</strong></h3>
         </div>
@@ -34,13 +34,16 @@
 </template>
 
 <script>
-import Card from '@/Card.js';
-import computeVote from '@/Vote.js';
+import Card from '@/classes/Card.js';
 
 export default {
     name: 'CardsBoard',
     data() {
         return {
+            partie: null,
+            currentBacklogDisplay: undefined,
+            currentBacklogLabel: undefined,
+            currentPlayerPseudo: undefined,
             cards: {
                 0: new Card('cartes_0.png'),
                 1: new Card('cartes_1.png'),
@@ -56,20 +59,13 @@ export default {
                 'coffee': new Card('cartes_cafe.png'),
             },
             selectedCard: undefined,
-            currentBacklog: 0,
-            currentPlayer: 0,
-            backlogs: [],
-            players: [],
-            currentBacklogLabel: undefined,
-            currentPlayerPseudo: undefined,
         };
     },
     mounted() {
-        this.currentBacklog = localStorage.getItem('currentBacklog');
-        this.currentPlayer = localStorage.getItem('currentPlayer');
-        this.partie = JSON.parse(localStorage.getItem('partie'));
-        this.currentBacklogLabel = this.partie['backlogs'][this.currentBacklog]['label'];
-        this.currentPlayerPseudo = this.partie['players'][this.currentPlayer]['pseudo'];
+        this.partie = this.$store.state.partie;
+        this.currentBacklogDisplay = this.partie.currentBacklog + 1;
+        this.currentBacklogLabel = this.partie.backlogs[this.partie.currentBacklog]['label'];
+        this.currentPlayerPseudo = this.partie.players[this.partie.currentPlayer]['pseudo'];
     },
     computed: {
         normalCards() {
@@ -91,23 +87,19 @@ export default {
             this.selectedCard = key;
         },
         tovote() {
-            this.partie['players'][this.currentPlayer]['hasVoted'] = this.selectedCard;
-            localStorage.setItem('partie', JSON.stringify(this.partie));
+            this.partie.currentPlayerVote(this.selectedCard);
+            this.$store.dispatch('updatePartieInstance', this.partie);
 
-            if (parseInt(this.currentPlayer) + 1 < this.partie['players'].length) {
-                localStorage.setItem('currentPlayer', parseInt(this.currentPlayer) + 1);
+            if (!this.partie.allPlayersVoted()) {
+                this.partie.currentPlayer++;
+                this.$store.dispatch('updatePartieInstance', this.partie);
                 this.$router.push('/dashboard');
             } else {
-                let voteResult = computeVote(JSON.parse(localStorage.getItem('partie'))['players'], JSON.parse(localStorage.getItem('partie'))['mode']);
-                this.partie['backlogs'][this.currentBacklog]['value'] = voteResult['value'];
-                this.partie['backlogs'][this.currentBacklog]['state'] = voteResult['state'];
-                this.partie['players'].forEach(player => {
-                    player['hasVoted'] = false;
-                });
-                localStorage.setItem('partie', JSON.stringify(this.partie));
-                localStorage.setItem('currentPlayer', 0);
-                if (parseInt(this.currentBacklog) + 1 < this.partie['backlogs'].length) {
-                    localStorage.setItem('currentBacklog', parseInt(this.currentBacklog) + 1);
+                this.partie.computeVote();
+                this.$store.dispatch('updatePartieInstance', this.partie);
+                if (!this.partie.isOver()) {
+                    this.partie.currentBacklog++;
+                    this.$store.dispatch('updatePartieInstance', this.partie);
                     this.$router.push('/dashboard');
                 } else {
                     this.$router.push('/results');
