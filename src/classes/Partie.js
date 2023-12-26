@@ -1,14 +1,19 @@
-import { VoteStrict, VoteMoyenne, VoteMediane, VoteMajoriteAbsolue, VoteMajoriteRelative } from './Votes.js';
+import { VoteStrategyFactory } from './VoteStrategyFactory.js';
+
 
 class Partie {
     constructor() {
         if (!Partie.instance) {
             
             this.mode = "strict";
-            this.players = [];
+            this.voteStrategy = VoteStrategyFactory.createStrategy(this.mode);
+
             this.backlogs = [];
-            this.currentPlayer = 0;
             this.currentBacklog = 0;
+
+            this.players = [];
+            this.currentPlayer = 0;
+            
             this.nbCoffeeBreak = 0;
             
             Partie.instance = this;
@@ -18,7 +23,9 @@ class Partie {
     }
 
     load(mode, players, backlogs) {
+        
         this.mode = mode;
+        this.voteStrategy = VoteStrategyFactory.createStrategy(this.mode);
             
         this.players = [];
         players.forEach(player => {
@@ -46,8 +53,6 @@ class Partie {
     }
 
     computeVote() {
-        let voteResult = {};
-
         if (this.allPlayersWantCoffee()) {
             this.nbCoffeeBreak++;
             this.players.forEach(player => {
@@ -57,23 +62,12 @@ class Partie {
             return "coffee";
         }
 
-        switch(this.mode) {
-            case "strict":
-                voteResult = VoteStrict(this.players);
-                break;
-            case "moyenne":
-                voteResult = VoteMoyenne(this.players);
-                break;
-            case "médiane":
-                voteResult = VoteMediane(this.players);
-                break;
-            case "majorité absolue":
-                voteResult = VoteMajoriteAbsolue(this.players);
-                break;
-            case "majorité relative":
-                voteResult = VoteMajoriteRelative(this.players);
-                break;
-        }
+        const playersWithNumericVotes = this.players.filter(player => {
+            const vote = parseFloat(player.hasVoted);
+            return !isNaN(vote);
+        });
+
+        let voteResult = this.voteStrategy.computeVote(playersWithNumericVotes, this.players.length);
 
         this.backlogs[this.currentBacklog]['value'] = voteResult.value;
         this.backlogs[this.currentBacklog]['state'] = voteResult.state;
