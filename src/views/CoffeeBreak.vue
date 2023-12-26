@@ -15,7 +15,7 @@
 export default {
     name: 'CoffeeBreak',
     mounted() {
-        const backlogs = this.$store.state.partie ? this.$store.state.partie.backlogs : null;
+        const backlogs = this.$store.getters.getPartieInstance ? this.$store.getters.getPartieInstance.backlogs : null;
 
         if (backlogs) {
             const data = { backlogs };

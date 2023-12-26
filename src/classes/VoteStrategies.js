@@ -28,16 +28,20 @@ class VoteStrictStrategy extends VoteStrategy {
 
 class VoteMoyenneStrategy extends VoteStrategy {
     computeVote(playersWithNumericVotes, nbVotes) {
-        let state, value;
-        let sum;
-
+        let sum = 0;
+        
         playersWithNumericVotes.forEach(player => {
-            const v = parseFloat(player.hasVoted);
-            if (!isNaN(v))
-                sum += v;
+            sum += parseFloat(player.hasVoted);
         });
-        value = Math.floor(sum / nbVotes);
-        state = 1;
+        
+        let value = Math.floor(sum / nbVotes);
+
+        let state;
+        if (value == 0) {
+            state = 2;
+        } else {
+            state = 1;
+        }
 
         return {'value': value, 'state': state};
     }

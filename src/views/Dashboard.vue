@@ -1,6 +1,7 @@
 <template>
     <div>
         <div id="leftDiv">
+            <p>mode : <strong>{{ mode }}</strong></p>
             <div>
                 <h2>BACKLOG #{{ parseInt(currentBacklog) + 1 }}</h2>
                 <h1>{{ currentBacklogLabel }}</h1>
@@ -45,6 +46,7 @@ export default {
     data() {
         return {
             partie: null,
+            mode: undefined,
             currentBacklog: 0,
             currentPlayer: 0,
             backlogs: [],
@@ -54,8 +56,9 @@ export default {
         };
     },
     mounted() {
-        this.partie = this.$store.state.partie;
-        this.currentBacklog = JSON.parse(localStorage.getItem('vuexState'))['partie'].currentBacklog;
+        this.partie = this.$store.getters.getPartieInstance;
+        this.mode = this.partie.mode;
+        this.currentBacklog = this.partie.currentBacklog;
         this.currentPlayer = this.partie.currentPlayer;
         this.backlogs = this.partie.backlogs;
         this.players = this.partie.players;
@@ -82,6 +85,14 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+#leftDiv > p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(15%, 50%);
+    font-family: ObjectSans-Slanted !important;
 }
 
 .player-status {

@@ -40,7 +40,7 @@ export default {
     name: 'CardsBoard',
     data() {
         return {
-            partie: this.$store.state.partie,
+            partie: this.$store.getters.getPartieInstance,
             currentBacklogDisplay: undefined,
             currentBacklogLabel: undefined,
             currentPlayerPseudo: undefined,
@@ -62,7 +62,7 @@ export default {
         };
     },
     mounted() {
-        this.partie = this.$store.state.partie;
+        this.partie = this.$store.getters.getPartieInstance;
         this.currentBacklogDisplay = this.partie.currentBacklog + 1;
         this.currentBacklogLabel = this.partie.backlogs[this.partie.currentBacklog]['label'];
         this.currentPlayerPseudo = this.partie.players[this.partie.currentPlayer]['pseudo'];

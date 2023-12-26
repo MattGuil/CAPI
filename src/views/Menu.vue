@@ -28,11 +28,6 @@ import InputsBacklogs from '../components/InputsBacklogs.vue';
 
 export default {
     name: 'MenuVue',
-    data() {
-        return {
-            partie: undefined,
-        };
-    },
     components: {
         SlcNbJoueurs,
         SlcModeJeu,
@@ -40,7 +35,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('createPartieInstance');
-    },  
+    },
     methods: {
         importBacklogs() {
             const fileInput = document.createElement('input');
@@ -62,18 +57,24 @@ export default {
             });
             fileInput.click();
         },
-        isPlayButtonEnabled() {
-            return this.$refs.InputsBacklogs.backlogsOk() && this.$refs.SelecteurNbJoueurs.playersOk();
-        },
         createPartie() {
             if (this.$refs.InputsBacklogs.backlogsOk() && this.$refs.SelecteurNbJoueurs.playersOk()) {
                 let mode = this.$refs.SelecteurModeJeu.generateJSON();
                 let players = this.$refs.SelecteurNbJoueurs.generateJSON();
                 let backlogs = this.$refs.InputsBacklogs.generateJSON();
 
-                this.$store.dispatch('loadPartieInstance', { mode, players, backlogs });
-                
-                this.$router.push('/dashboard');
+                this.$store.dispatch('loadPartieInstance', { mode, players, backlogs })
+                .then(() => {
+                    const allBacklogsProcessed = backlogs.every(backlog => backlog['state'] === 1);
+
+                    if (allBacklogsProcessed) {
+                        this.$router.push('/results');
+                    } else {
+                        const currentPartie = this.$store.getters.getPartieInstance;
+                        currentPartie.currentBacklog = currentPartie.getFirstNotProcessedBacklog();
+                        this.$router.push('/dashboard');
+                    }
+                });
             }
         },
     }

@@ -37,9 +37,10 @@ export default {
         };
     },
     mounted() {
-        this.nbCoffeeBreak = this.$store.state.partie.nbCoffeeBreak;
-        this.players = this.$store.state.partie.players;
-        this.backlogs = this.$store.state.partie.backlogs;
+        this.partie = this.$store.getters.getPartieInstance;
+        this.nbCoffeeBreak = this.partie.nbCoffeeBreak;
+        this.players = this.partie.players;
+        this.backlogs = this.partie.backlogs;
     },
     computed: {
         listPlayers() {
@@ -52,7 +53,7 @@ export default {
     },
     methods: {
         generateFinalJSON() {
-            const backlogs = this.$store.state.partie ? this.$store.state.partie.backlogs : null;
+            const backlogs = this.$store.getters.getPartieInstance? this.$store.getters.getPartieInstance.backlogs : null;
 
             if (backlogs) {
                 const data = { backlogs };

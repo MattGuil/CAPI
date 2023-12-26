@@ -34,7 +34,7 @@ methods: {
         this.backlogs[event.target.id]['label'] = event.target.value;
     },
     addBacklog() {
-        if (this.backlogs[this.backlogs.length - 1]['label'] != "")
+        if (this.backlogs.length == 0 || this.backlogs[this.backlogs.length - 1]['label'] != "")
             this.backlogs.push({'label': '', 'state': -1, 'value': undefined});
     },
     removeBacklog(index) {
