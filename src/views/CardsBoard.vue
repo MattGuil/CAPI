@@ -40,7 +40,7 @@ export default {
     name: 'CardsBoard',
     data() {
         return {
-            partie: null,
+            partie: this.$store.state.partie,
             currentBacklogDisplay: undefined,
             currentBacklogLabel: undefined,
             currentPlayerPseudo: undefined,
@@ -95,10 +95,13 @@ export default {
                 this.$store.dispatch('updatePartieInstance', this.partie);
                 this.$router.push('/dashboard');
             } else {
-                this.partie.computeVote();
+                let r = this.partie.computeVote();
                 this.$store.dispatch('updatePartieInstance', this.partie);
+                if (r == "coffee") {
+                    this.$router.push('/coffeebreak');
+                    return;
+                }
                 if (!this.partie.isOver()) {
-                    this.partie.currentBacklog++;
                     this.$store.dispatch('updatePartieInstance', this.partie);
                     this.$router.push('/dashboard');
                 } else {

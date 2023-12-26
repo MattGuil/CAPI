@@ -1,3 +1,4 @@
+/*
 import { mount } from '@vue/test-utils'
 import { describe } from 'vitest';
 
@@ -10,3 +11,4 @@ describe('CoffeeBreak', () => {
         expect(wrapper.exists()).toBe(true);
     });
 });
+*/

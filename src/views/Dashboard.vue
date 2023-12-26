@@ -34,7 +34,6 @@
                     <img v-if="backlog['state'] == 2" src="../assets/icons/redo.png">
                 </div>
             </div>
-            <p>TOUR <strong>1</strong></p>
         </div>
     </div>
 </template>
@@ -45,6 +44,7 @@ export default {
     name: 'DashboardVue',
     data() {
         return {
+            partie: null,
             currentBacklog: 0,
             currentPlayer: 0,
             backlogs: [],
@@ -54,10 +54,11 @@ export default {
         };
     },
     mounted() {
-        this.currentBacklog = this.$store.state.partie.currentBacklog;
-        this.currentPlayer = this.$store.state.partie.currentPlayer;
-        this.backlogs = this.$store.state.partie.backlogs;
-        this.players = this.$store.state.partie.players;
+        this.partie = this.$store.state.partie;
+        this.currentBacklog = JSON.parse(localStorage.getItem('vuexState'))['partie'].currentBacklog;
+        this.currentPlayer = this.partie.currentPlayer;
+        this.backlogs = this.partie.backlogs;
+        this.players = this.partie.players;
         this.currentBacklogLabel = this.backlogs[this.currentBacklog]['label'];
         this.currentPlayerPseudo = this.players[this.currentPlayer]['pseudo'];
     },
@@ -148,20 +149,9 @@ h2 {
 #rightDiv {
     background-color: #518CE5;
     color: white;
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-}
-
-#rightDiv > p {
-    position: absolute;
-    bottom: 3%;
-    right: 3%;
-}
-
-#rightDiv > p strong {
-    margin-left: 10px;
 }
 
 .backlog-status {
@@ -211,16 +201,8 @@ h2 {
     opacity: .5;
 }
 
-.backlog-status.notProcessed > div:last-child, .backlog-status.current > div:last-child {
+.backlog-status.notProcessed > div:last-child, .backlog-status.current:not(.loop) > div:last-child {
     display: none;
-}
-
-.backlog-status.processed > div:last-child {
-    background-color: #88EB65;
-}
-
-.backlog-status.loop > div:last-child {
-    background-color: #F88DF0;
 }
 
 .backlog-status.current > div:first-child {
@@ -235,11 +217,19 @@ h2 {
     background-color: #88EB65;
 }
 
+.backlog-status.processed > div:last-child {
+    background-color: #88EB65;
+}
+
 .backlog-status.loop {
     color: #F88DF0;
 }
 
 .backlog-status.loop > div:first-child {
+    background-color: #F88DF0;
+}
+
+.backlog-status.loop > div:last-child {
     background-color: #F88DF0;
 }
 

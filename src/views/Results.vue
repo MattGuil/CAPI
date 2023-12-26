@@ -21,8 +21,7 @@
         <div id="rightDiv">
             <div>
                 <h3>STATS</h3>
-                <p><strong>3</strong> TOURS</p>
-                <p><strong>5</strong> PAUSES CAFÉ</p>
+                <p><strong>{{ nbCoffeeBreak }}</strong> PAUSES CAFÉ</p>
             </div>
         </div>
     </div>
@@ -38,6 +37,7 @@ export default {
         };
     },
     mounted() {
+        this.nbCoffeeBreak = this.$store.state.partie.nbCoffeeBreak;
         this.players = this.$store.state.partie.players;
         this.backlogs = this.$store.state.partie.backlogs;
     },

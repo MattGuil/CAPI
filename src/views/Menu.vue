@@ -38,6 +38,9 @@ export default {
         SlcModeJeu,
         InputsBacklogs
     },
+    mounted() {
+        this.$store.dispatch('createPartieInstance');
+    },  
     methods: {
         importBacklogs() {
             const fileInput = document.createElement('input');
@@ -64,11 +67,11 @@ export default {
         },
         createPartie() {
             if (this.$refs.InputsBacklogs.backlogsOk() && this.$refs.SelecteurNbJoueurs.playersOk()) {
-                const mode = this.$refs.SelecteurModeJeu.generateJSON();
-                const players = this.$refs.SelecteurNbJoueurs.generateJSON();
-                const backlogs = this.$refs.InputsBacklogs.generateJSON();
+                let mode = this.$refs.SelecteurModeJeu.generateJSON();
+                let players = this.$refs.SelecteurNbJoueurs.generateJSON();
+                let backlogs = this.$refs.InputsBacklogs.generateJSON();
 
-                this.$store.dispatch('createPartieInstance', { mode, players, backlogs });
+                this.$store.dispatch('loadPartieInstance', { mode, players, backlogs });
                 
                 this.$router.push('/dashboard');
             }

@@ -7,7 +7,11 @@
             <input 
                 type="text"
                 :id="index"
-                :value="backlog"
+                :class="{
+                    'processed': backlog['state'] == 1,
+                    'loop':  backlog['state'] == 2,
+                }"
+                :value="backlog['label']"
                 @input="onValueChange"
             >
             <img src="../assets/icons/bin.png" @click="removeBacklog(index)">
@@ -21,17 +25,17 @@ export default {
 
 data() {
     return {
-        backlogs: [],
+        backlogs: JSON.parse(localStorage.getItem('vuexState')).partie.backlogs,
     };
 },
 
 methods: {
     onValueChange(event) {
-        this.backlogs[event.target.id] = event.target.value;
+        this.backlogs[event.target.id]['label'] = event.target.value;
     },
     addBacklog() {
-        if (this.backlogs[this.backlogs.length - 1] != "")
-            this.backlogs.push('');
+        if (this.backlogs[this.backlogs.length - 1]['label'] != "")
+            this.backlogs.push({'label': '', 'state': -1, 'value': undefined});
     },
     removeBacklog(index) {
         this.backlogs.splice(index, 1);
@@ -43,14 +47,14 @@ methods: {
         if (fileContent['backlogs']) {
             this.backlogs = [];
             fileContent['backlogs'].forEach(backlog => {
-                this.backlogs.push(backlog['label']);
+                this.backlogs.push(backlog);
             });
         } else {
             alert('Ce fichier ne contient pas de backlogs.');
         }
     },
     backlogsOk() {
-        return this.backlogs.some(backlog => backlog.trim() !== '');
+        return this.backlogs.some(backlog => backlog['label'].trim() !== '');
     },
 }
 
@@ -85,6 +89,14 @@ input {
     width: 100%;
     padding: 3% 5%;
     font-size: 1rem;
+}
+
+input.processed {
+    border: 3px #88EB65 solid;
+}
+
+input.loop {
+    border: 3px #F88DF0 solid;
 }
 
 img {

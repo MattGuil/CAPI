@@ -10,18 +10,23 @@ const store = createStore({
     mutations: {
         setPartieInstance(state, instance) {
             state.partie = instance;
-        }
+        },
     },
 
     actions: {
-        createPartieInstance({ commit }, { mode, players, backlogs }) {
-            const partie = new Partie(mode, players, backlogs);
+        createPartieInstance({ commit }) {
+            const partie = new Partie();
             commit('setPartieInstance', partie);
         },
 
-        updatePartieInstance({ commit }, newPartie) {
-            commit('setPartieInstance', newPartie);
-        }
+        loadPartieInstance({ state, commit }, {mode, players, backlogs}) {
+            let loadedPartie = state.partie.load(mode, players, backlogs);
+            commit('setPartieInstance', loadedPartie);
+        },
+
+        updatePartieInstance({ commit }, updatedPartie) {
+            commit('setPartieInstance', updatedPartie);
+        },
     },
 
     getters: {
