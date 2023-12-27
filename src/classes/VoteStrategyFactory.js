@@ -6,8 +6,15 @@ import {
     VoteMajoriteRelativeStrategy
 } from './VoteStrategies.js';
 
-
+/**
+ * Factory permettant de créer des stratégies de vote en fonction du mode spécifié.
+ */
 class VoteStrategyFactory {
+    /**
+     * Crée une stratégie de vote en fonction du mode spécifié.
+     * @param {string} mode - Le mode de vote pour créer la stratégie (strict, moyenne, médiane, majorité absolue, majorité relative).
+     * @returns {VoteStrictStrategy|VoteMoyenneStrategy|VoteMedianeStrategy|VoteMajoriteAbsolueStrategy|VoteMajoriteRelativeStrategy|null} - Une instance de la stratégie de vote correspondante ou null si aucun mode correspondant n'est trouvé.
+     */
     static createStrategy(mode) {
         switch (mode) {
             case "strict":
