@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,9 +21,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # - name: Run tests
+      - name: Run tests
+        run: npm test
 
-      # - name: Generate documentation
+  # document:
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Build and deploy to GitHub Pages
         run: |
