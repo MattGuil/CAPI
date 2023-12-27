@@ -59,7 +59,6 @@ export default {
 
             const labels = Object.keys(votesCount);
             const data = Object.values(votesCount);
-            console.log(this.currentBacklogState);
             const backgroundColor = this.currentBacklogState == '1' ? '#88EB65' : '#F88DF0';
 
             new Chart(ctx, {

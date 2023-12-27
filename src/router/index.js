@@ -34,8 +34,10 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
+  mode: 'history',
+  history: createWebHistory(),
+  base: '/CAPI/',
+  routes: routes
 });
 
 export default router;
