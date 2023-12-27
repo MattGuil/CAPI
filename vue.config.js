@@ -4,5 +4,4 @@ module.exports = {
     host: "localhost"
   },
   publicPath: process.env.NODE_ENV === 'production' ? '/CAPI/' : '/',
-  baseUrl: process.env.NODE_ENV === 'production' ? '/CAPI/' : '/',
 }
