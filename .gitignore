@@ -3,11 +3,16 @@ node_modules/
 npm-debug.log
 
 # Vue.js
+/dist/
 /node_modules/
+/public/
 
 # IDE specific files
 .vscode/
 .idea/
+
+# Compiled Vue.js files
+/dist/
 
 # Logs
 *.log
