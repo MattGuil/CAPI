@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Menu from '../views/Menu.vue';
+// import Menu from '../views/Menu.vue';
 import Dashboard from '../views/Dashboard.vue';
 import CardsBoard from '../views/CardsBoard.vue';
 import Chart from '../views/Chart.vue';
@@ -11,7 +11,9 @@ const routes = [
   {
     path: "/",
     name: "Menu",
-    component: Menu
+    component: {
+      template: '<div>Hello world!</div>'
+    }
   },
   {
     path: "/dashboard",
