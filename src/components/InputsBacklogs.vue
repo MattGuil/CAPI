@@ -25,7 +25,7 @@ export default {
 
 data() {
     return {
-        backlogs: JSON.parse(localStorage.getItem('vuexState')).partie.backlogs,
+        backlogs: null,
     };
 },
 
