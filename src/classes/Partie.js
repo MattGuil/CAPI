@@ -55,6 +55,10 @@ class Partie {
         return this.players.every(player => player['hasVoted'] === 'coffee');
     }
 
+    allPlayersDontKnow() {
+        return this.players.every(player => player['hasVoted'] === '?');
+    }
+
     computeVote() {
         if (this.allPlayersWantCoffee()) {
             this.nbCoffeeBreak++;
@@ -65,12 +69,18 @@ class Partie {
             return "coffee";
         }
 
-        const playersWithNumericVotes = this.players.filter(player => {
-            const vote = parseFloat(player.hasVoted);
-            return !isNaN(vote);
-        });
+        let voteResult = {};
 
-        let voteResult = this.voteStrategy.computeVote(playersWithNumericVotes, this.players.length);
+        if (this.allPlayersDontKnow()) {
+            voteResult = {'value': undefined, 'state': 2};
+        } else {
+            const playersWithNumericVotes = this.players.filter(player => {
+                const vote = parseFloat(player.hasVoted);
+                return !isNaN(vote);
+            });
+
+            voteResult = this.voteStrategy.computeVote(playersWithNumericVotes, this.players.length);
+        }
 
         this.backlogs[this.currentBacklog]['value'] = voteResult.value;
         this.backlogs[this.currentBacklog]['state'] = voteResult.state;
