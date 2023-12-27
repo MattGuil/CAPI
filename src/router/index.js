@@ -1,4 +1,4 @@
-import { createRouter } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 import Menu from '../views/Menu.vue';
 import Dashboard from '../views/Dashboard.vue';
@@ -42,6 +42,7 @@ const routes = [
 
 const router = createRouter({
   mode: 'hash',
+  history: createWebHashHistory(),
   base: '/CAPI/',
   routes: routes
 });
