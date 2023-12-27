@@ -27,14 +27,14 @@ class VoteStrictStrategy extends VoteStrategy {
 }
 
 class VoteMoyenneStrategy extends VoteStrategy {
-    computeVote(playersWithNumericVotes, nbVotes) {
+    computeVote(playersWithNumericVotes) {
         let sum = 0;
         
         playersWithNumericVotes.forEach(player => {
             sum += parseFloat(player.hasVoted);
         });
         
-        let value = Math.floor(sum / nbVotes);
+        let value = Math.floor(sum / playersWithNumericVotes.length);
 
         let state;
         if (value == 0) {
