@@ -14,7 +14,7 @@
             </div>
         </div>
         <div id="rightDiv">
-            <img src="@/assets/icons/import.png" @click="importBacklogs">
+            <img src="../assets/icons/import.png" @click="importBacklogs">
             <InputsBacklogs ref="InputsBacklogs"/>
         </div>
     </div>

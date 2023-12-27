@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import Card from '@/classes/Card.js';
+import Card from '../classes/Card.js';
 
 export default {
     name: 'CardsBoard',
