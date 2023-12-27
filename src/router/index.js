@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
 import Menu from '../views/Menu.vue';
-import Dashboard from '../views/Dashboard.vue';
+import DashBoard from '../views/DashBoard.vue';
 import CardsBoard from '../views/CardsBoard.vue';
 import Chart from '../views/Chart.vue';
 import CoffeeBreak from '../views/CoffeeBreak.vue';
@@ -15,8 +15,8 @@ const routes = [
   },
   {
     path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard
+    name: "DashBoard",
+    component: DashBoard
   },
   {
     path: "/cardsboard",

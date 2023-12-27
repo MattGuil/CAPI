@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
+import { Chart, LinearScale, CategoryScale, BarElement, BarController, Tooltip } from 'chart.js';
+Chart.register(LinearScale, CategoryScale, BarElement, BarController, Tooltip);
 
 export default {
     name: 'ChartVue',
