@@ -103,7 +103,11 @@ export default {
                 }
                 if (!this.partie.isOver()) {
                     this.$store.dispatch('updatePartieInstance', this.partie);
-                    this.$router.push('/dashboard');
+                    if (this.partie.showChart) {
+                        this.$router.push('/chart');
+                    } else {
+                        this.$router.push('/dashboard');
+                    }
                 } else {
                     this.$router.push('/results');
                 }

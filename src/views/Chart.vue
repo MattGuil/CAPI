@@ -2,8 +2,8 @@
     <div>
         <div>
             <div>
-                <h2>BACKLOG #3</h2>
-                <h1>formulaire de contact</h1>
+                <h2>BACKLOG #{{ currentBacklogDisplay }}</h2>
+                <h1>{{ currentBacklogLabel }}</h1>
                 <h3><strong>RÉPARTITION</strong> DES VOTES</h3>
             </div>
             <button @click="this.$router.push('/dashboard');">CONTINUER</button>
@@ -18,21 +18,58 @@ Chart.register(...registerables);
 
 export default {
     name: 'ChartVue',
+    data() {
+        return {
+            partie: undefined,
+            currentBacklogDisplay: undefined,
+            currentBacklogLabel: undefined,
+            players: []
+        };
+    },
     mounted() {
+        this.partie = this.$store.getters.getPartieInstance;
+        this.currentBacklogDisplay = this.partie.infosForChart.currentBacklogDisplay;
+        this.currentBacklogLabel = this.partie.infosForChart.currentBacklogLabel;
+        this.currentBacklogState = this.partie.infosForChart.currentBacklogState;
+        this.votes = this.partie.infosForChart.votes;
         this.renderChart();
     },
     methods: {
         renderChart() {
             const ctx = this.$refs.myChart;
 
+            const votesCount = {
+                '0': 0,
+                '1': 0,
+                '2': 0,
+                '3': 0,
+                '5': 0,
+                '8': 0,
+                '13': 0,
+                '20': 0,
+                '40': 0,
+                '100': 0,
+                '?': 0,
+                'coffee': 0
+            };
+
+            this.votes.forEach(vote => {
+                votesCount[vote]++;
+            });
+
+            const labels = Object.keys(votesCount);
+            const data = Object.values(votesCount);
+            console.log(this.currentBacklogState);
+            const backgroundColor = this.currentBacklogState == '1' ? '#88EB65' : '#F88DF0';
+
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['0', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?', 'CAFÉ!'],
+                    labels: labels,
                     datasets: [{
                         label: 'Nombre de votes',
-                        data: [0, 1, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-                        backgroundColor: '#518CE5',
+                        data: data,
+                        backgroundColor: backgroundColor,
                         borderWidth: 3
                     }]
                 },

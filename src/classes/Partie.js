@@ -13,6 +13,9 @@ class Partie {
 
             this.players = [];
             this.currentPlayer = 0;
+
+            this.showChart = true;
+            this.infosForChart = {};
             
             this.nbCoffeeBreak = 0;
             
@@ -72,7 +75,13 @@ class Partie {
         this.backlogs[this.currentBacklog]['value'] = voteResult.value;
         this.backlogs[this.currentBacklog]['state'] = voteResult.state;
 
+        this.infosForChart = {};
+        this.infosForChart.currentBacklogDisplay = this.currentBacklog + 1;
+        this.infosForChart.currentBacklogLabel = this.backlogs[this.currentBacklog]['label'];
+        this.infosForChart.currentBacklogState = this.backlogs[this.currentBacklog]['state'];
+        this.infosForChart.votes = [];
         this.players.forEach(player => {
+            this.infosForChart.votes.push(player['hasVoted']);
             player['hasVoted'] = false;
         });
         this.currentPlayer = 0;
