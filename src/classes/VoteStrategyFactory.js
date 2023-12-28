@@ -8,7 +8,8 @@ import {
 
 /**
  * Factory permettant de créer des stratégies de vote en fonction du mode spécifié.
- * \nDESIGN PATTERN : FACTORY
+ * <br>
+ * DESIGN PATTERN : FACTORY
  */
 class VoteStrategyFactory {
     /**

@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test": "vitest --dom",
-    "generate-docs": "jsdoc -r */classes -d ./docs"
+    "generate-docs": "jsdoc -r ./src/classes/ -d ./docs"
   },
   "dependencies": {
     "chart.js": "^3.0.0",
