@@ -21,9 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Clear old documentation
-        run: rm -rf ./docs/*
-
       - name: Generate documentation
         run: npm run generate-docs
 
