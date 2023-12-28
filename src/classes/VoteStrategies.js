@@ -29,8 +29,6 @@ class VoteStrictStrategy extends VoteStrategy {
         let state, value;
         let firstVote, currentVote;
 
-        if (playersWithNumericVotes.length === 0)
-            state = 1;
         firstVote = parseFloat(playersWithNumericVotes[0].hasVoted);
         value = firstVote;
         state = 1;

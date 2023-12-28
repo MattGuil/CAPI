@@ -7,22 +7,8 @@ on:
 
 jobs:
   document:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Generate documentation
-        run: npm run generate-docs
+    run: npm run generate-docs
+        
 
   test:
     runs-on: ubuntu-latest
