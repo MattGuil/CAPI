@@ -15,17 +15,18 @@
 export default {
     name: 'CoffeeBreak',
     mounted() {
+        const mode = this.$store.getters.getPartieInstance ? this.$store.getters.getPartieInstance.mode : null;
         const backlogs = this.$store.getters.getPartieInstance ? this.$store.getters.getPartieInstance.backlogs : null;
 
-        if (backlogs) {
-            const data = { backlogs };
+        if (mode && backlogs) {
+            const data = { mode, backlogs };
             const jsonData = JSON.stringify(data);
 
             const blob = new Blob([jsonData], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'backlogs.json';
+            link.download = 'backlogs-in-progress.json';
             link.click();
             URL.revokeObjectURL(url);
         }

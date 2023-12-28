@@ -14,7 +14,7 @@
             </div>
         </div>
         <div id="rightDiv">
-            <img src="../assets/icons/import.png" @click="importBacklogs">
+            <img src="../assets/icons/import.png" @click="importJSON">
             <InputsBacklogs ref="InputsBacklogs"/>
         </div>
     </div>
@@ -37,7 +37,7 @@ export default {
         this.$store.dispatch('createPartieInstance');
     },
     methods: {
-        importBacklogs() {
+        importJSON() {
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.addEventListener('change', event => {
@@ -47,6 +47,7 @@ export default {
                     reader.onload = () => {
                         try {
                             const fileContent = JSON.parse(reader.result);
+                            this.$refs.SelecteurModeJeu.importJSON(fileContent);
                             this.$refs.InputsBacklogs.importJSON(fileContent);
                         } catch (error) {
                             console.error('Erreur lors de la lecture du fichier :', error);

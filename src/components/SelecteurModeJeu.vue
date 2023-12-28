@@ -6,7 +6,7 @@
             :key="index"
             class="mode"
             :class="{ selected: selectedMode === index }"
-            @click="selectMode(index)"
+            @click="selectModeOfIndex(index)"
         >
             {{ mode.toLocaleUpperCase() }}
         </div>
@@ -29,11 +29,41 @@ export default {
         };
     },
     methods: {
-        selectMode(index) {
+        selectModeOfIndex(index) {
             this.selectedMode = index;
+        },
+        selectModeOfName(name) {
+            switch(name) {
+                case "strict":
+                    this.selectModeOfIndex(0);
+                    break;
+                case "moyenne":
+                    this.selectModeOfIndex(1);
+                    break;
+                case "médiane":
+                    this.selectModeOfIndex(2);
+                    break;
+                case "majorité absolue":
+                    this.selectModeOfIndex(3);
+                    break;
+                case "majorité relative":
+                    this.selectModeOfIndex(4);
+                    break;
+                default:
+                    this.selectModeOfIndex(0);
+                    break;
+            }
         },
         generateJSON() {
             return this.modes[this.selectedMode];
+        },
+        importJSON(fileContent) {
+            if (fileContent['mode']) {
+                this.selectModeOfName(fileContent['mode']);
+            } else {
+                this.selectModeOfIndex(0);
+            }
+                
         },
     }
 }
