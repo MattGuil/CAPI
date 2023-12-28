@@ -1,6 +1,6 @@
 /**
  * La classe de base représentant une stratégie de vote.
- * DESIGN PATTERN : STRATEGY
+ * \nDESIGN PATTERN : STRATEGY
  */
 class VoteStrategy {
     /**
@@ -15,7 +15,7 @@ class VoteStrategy {
 
 /**
  * Stratégie de vote strict où tous les votes doivent être identiques pour être valides.
- * DESIGN PATTERN : STRATEGY
+ * \nDESIGN PATTERN : STRATEGY
  */
 class VoteStrictStrategy extends VoteStrategy {
     /**
@@ -46,7 +46,7 @@ class VoteStrictStrategy extends VoteStrategy {
 
 /**
  * Stratégie de vote moyenne qui calcule la moyenne des votes numériques.
- * DESIGN PATTERN : STRATEGY
+ * \nDESIGN PATTERN : STRATEGY
  */
 class VoteMoyenneStrategy extends VoteStrategy {
     /**
@@ -76,7 +76,7 @@ class VoteMoyenneStrategy extends VoteStrategy {
 
 /**
  * Stratégie de vote médiane qui trouve la médiane des votes numériques.
- * DESIGN PATTERN : STRATEGY
+ * \nDESIGN PATTERN : STRATEGY
  */
 class VoteMedianeStrategy extends VoteStrategy {
     /**
@@ -101,7 +101,7 @@ class VoteMedianeStrategy extends VoteStrategy {
 
 /**
  * Stratégie de vote à majorité absolue qui vérifie si une valeur a plus de la moitié des votes.
- * DESIGN PATTERN : STRATEGY
+ * \nDESIGN PATTERN : STRATEGY
  */
 class VoteMajoriteAbsolueStrategy extends VoteStrategy {
     /**
@@ -138,7 +138,7 @@ class VoteMajoriteAbsolueStrategy extends VoteStrategy {
 
 /**
  * Stratégie de vote à majorité relative qui vérifie si une valeur a plus de votes que les autres.
- * DESIGN PATTERN : STRATEGY
+ * \nDESIGN PATTERN : STRATEGY
  */
 class VoteMajoriteRelativeStrategy extends VoteStrategy {
     /**
