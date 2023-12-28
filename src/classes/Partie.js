@@ -1,7 +1,8 @@
 import { VoteStrategyFactory } from './VoteStrategyFactory.js';
 
 /**
- * La classe représentant une partie du jeu.\nDESIGN PATTERN : SINGLETON
+ * La classe représentant une partie du jeu.
+ * DESIGN PATTERN : SINGLETON
  */
 class Partie {
     /**
