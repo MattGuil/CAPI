@@ -1,5 +1,5 @@
 # CAPI - PLANNING POKER
-### développé par :
+développé par :
 - Awa KARAMOKO
 - Matthieu GUILLEMIN
 
