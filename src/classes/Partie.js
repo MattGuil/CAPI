@@ -81,11 +81,11 @@ class Partie {
     }
 
     /**
-     * Vérifie si tous les joueurs ne savent pas voter.
-     * @returns {boolean} - True si tous les joueurs ne savent pas voter, sinon False.
+     * Vérifie si tous les joueurs ont voté pour 'coffee' ou '?'.
+     * @returns {boolean} - True si tous les joueurs ont voté soit 'coffee' soit '?', sinon False.
      */
     allPlayersDontKnow() {
-        return this.players.every(player => player['hasVoted'] === '?');
+        return this.players.every(player => player['hasVoted'] === 'coffee' || player['hasVoted'] === '?');
     }
 
     /**
